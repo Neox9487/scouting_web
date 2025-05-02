@@ -1,20 +1,26 @@
 import React from "react";
 
-const Selections =  ({label, selections, value, onChange, ...props}) => {
+const Selections =  ({label, options, value, onChange, ...props}) => {
   return (
     <div style={{marginBottom:"10px"}}>
-      <label>{label}</label>
-      <div {...props}>
-        {
-          selections.map(
-            (selection, index) => (
-              <button key >
-                {selection}
-              </button>
-            )
+      <label>{label} </label>
+      {
+        options.map(
+          (option) => (
+            <button 
+              key={option.value} 
+              type="button"
+              onClick={() => onChange(option)}
+              className={value === option.value ? 'active' : ''}
+              {...props}
+            >
+              {option.label}
+            </button>
           )
-        }
-      </div>
+        )
+      }
     </div>
   )
 };
+
+export default Selections;
