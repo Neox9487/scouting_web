@@ -1,5 +1,5 @@
 import React from 'react';
-import ScoutingPage from './pages/scoutingPage/index';
+import ScoutingPage from './pages/ScoutingPage/index';
 
 function App() {
 
