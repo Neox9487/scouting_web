@@ -1,5 +1,5 @@
 import React from 'react';
-import DataForm from './widgets/DataForm';
+import DataForm from './components/DataForm';
 
 function App() {
 

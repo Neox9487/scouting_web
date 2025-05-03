@@ -5,15 +5,13 @@ const Counter = ({ lable, value, onChange, onIncrement, onDecrement , ...props})
     <div style={{marginBottom: "10px"}}>
       <lable>{lable}</lable>
       <div {...props}>
-        <button onClick={onIncrement}>Increment</button>
+        <button onClick={onIncrement} type="button">Increment</button>
         <input
           type="number" 
           value={value} 
           onChange={onChange} 
-        >
-          {value}
-        </input>
-        <button onClick={onDecrement}>Decrement</button>
+        />
+        <button onClick={onDecrement} type="button">Decrement</button>
       </div>
     </div>
   );
