@@ -18,8 +18,8 @@ export const submitData = async (data) => {
       throw new Error(`失敗!\n${response.status} ${response.statusText} - ${errorData.detail || ""}`);
     }
 
-    const data = await response.json();
-    return data;
+    const reciveData = await response.json();
+    return reciveData;
   } 
   catch (error) {
     console.error("失敗!", error);
@@ -46,8 +46,8 @@ export const deleteData = async (teamNumber, match) => {
        throw new Error(`失敗!\n${response.status} ${response.statusText} - ${errorData.detail || ""}`);
     }
 
-    const data = await response.json();
-    return data;
+    const reciveData = await response.json();
+    return reciveData;
   } 
   catch (error) {
     throw error;
@@ -72,8 +72,8 @@ export const updateData = async (data, team_number, ) => {
       throw new Error(`失敗!\n${response.status} ${response.statusText} - ${errorData.detail || ""}`);
     }
 
-    const data = await response.json();
-    return data;
+    const reciveData = await response.json();
+    return reciveData;
   }
   catch (error) {
     throw error;
@@ -97,8 +97,8 @@ export const fetchData = async () => {
       throw new Error(`失敗!\n${response.status} ${response.statusText} - ${errorData.detail || ""}`);
     }
 
-    const data = await response.json();
-    return data;
+    const reciveData = await response.json();
+    return reciveData;
   } 
   catch (error) {
     throw error;

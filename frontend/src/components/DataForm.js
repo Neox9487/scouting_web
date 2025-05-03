@@ -45,7 +45,7 @@ const DataForm = ({ onSubmit, initialValues = {} }) => {
   useEffect(
     () => {
       setFormData({
-        team: initialValues.team || "",
+        team_number: initialValues.team_number || "",
         match: initialValues.match || "",
         auto: {
           leave: initialValues.auto?.leave || false,
@@ -72,6 +72,9 @@ const DataForm = ({ onSubmit, initialValues = {} }) => {
 
   // Input change handler
   const handleInputChange = (section, field, value) => {
+    if (["team_number", "match"].includes(field)) {
+      value = parseInt(value, 10) || 0;
+    }
     setFormData(prevState => {
       if (section) { 
         return {
@@ -94,17 +97,9 @@ const DataForm = ({ onSubmit, initialValues = {} }) => {
   const handleIncrement = (section, field) => {
     setFormData(prevState => {
       const currentValue = prevState[section][field] || 0;
-      if (section) {
-        return {
-          ...prevState,
-          [section]: {
-            ...prevState[section],
-            [field]: currentValue+1,
-          }
-        }
-      }
-      else {
-        return {
+      return {
+        ...prevState,
+        [section]: {
           ...prevState[section],
           [field]: currentValue+1,
         }
@@ -116,17 +111,9 @@ const DataForm = ({ onSubmit, initialValues = {} }) => {
   const handleDecrement = (section, field) => {
     setFormData(prevState => {
       const currentValue = prevState[section][field] || 0;
-      if (section) {
-        return {
-          ...prevState,
-          [section]: {
-            ...prevState[section],
-            [field]: currentValue > 0 ? currentValue-1 : 0,
-          }
-        }
-      }
-      else {
-        return {
+      return {
+        ...prevState,
+        [section]: {
           ...prevState[section],
           [field]: currentValue > 0 ? currentValue-1 : 0,
         }
@@ -147,14 +134,12 @@ const DataForm = ({ onSubmit, initialValues = {} }) => {
   };
 
   return (
-    <form>
-
+    <form onSubmit={handleSubmit}>
       {/* Team Number and Match Number */}
-      <h2>Scouting</h2>
-      <div class="section-box">
+      <div className="section-box">
         <div className="form-field">
           <InputField
-            label="Tean Number" 
+            label="Team Number" 
             type="number"
             value={formData.team_number}
             onChange={(e) => handleInputChange(null, "team_number", e.target.value)} 

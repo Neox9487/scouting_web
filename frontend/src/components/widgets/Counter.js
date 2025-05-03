@@ -6,11 +6,9 @@ const Counter = ({ lable, value, onChange, onIncrement, onDecrement , ...props})
       <lable>{lable}</lable>
       <div {...props}>
         <button onClick={onIncrement} type="button">Increment</button>
-        <input
-          type="number" 
-          value={value} 
-          onChange={onChange} 
-        />
+        <span>
+            {value}
+        </span>
         <button onClick={onDecrement} type="button">Decrement</button>
       </div>
     </div>
