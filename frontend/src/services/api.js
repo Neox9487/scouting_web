@@ -15,14 +15,14 @@ export const submitData = async (data) => {
 
     if (!response.ok) {
       const errorData = await response.json(); 
-      throw new Error(`失敗!\n${response.status} ${response.statusText} - ${errorData.detail || ""}`);
+      throw new Error(`Failed!\n${response.status} ${response.statusText} - ${errorData.detail || ""}`);
     }
 
     const reciveData = await response.json();
     return reciveData;
   } 
   catch (error) {
-    console.error("失敗!", error);
+    console.error("Failed!", error);
     throw error;
   }
 
@@ -33,7 +33,7 @@ export const deleteData = async (teamNumber, match) => {
   try {
     const response = await fetch(`${API_BASE_URL}/delete/`, 
       {
-        method: "POST", 
+        method: "DELETE", 
         headers: {
           "Content-Type": "application/json", 
         },
@@ -43,7 +43,7 @@ export const deleteData = async (teamNumber, match) => {
 
     if (!response.ok) {
        const errorData = await response.json();
-       throw new Error(`失敗!\n${response.status} ${response.statusText} - ${errorData.detail || ""}`);
+       throw new Error(`Failed!\n${response.status} ${response.statusText} - ${errorData.detail || ""}`);
     }
 
     const reciveData = await response.json();
@@ -59,7 +59,7 @@ export const updateData = async (data, team_number, ) => {
   try {
     const response = await fetch( `${API_BASE_URL}/update/`,
       {
-        method: "POST",
+        method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
@@ -69,7 +69,7 @@ export const updateData = async (data, team_number, ) => {
 
     if (!response.ok) {
       const errorData = await response.json();
-      throw new Error(`失敗!\n${response.status} ${response.statusText} - ${errorData.detail || ""}`);
+      throw new Error(`Failde!\n${response.status} ${response.statusText} - ${errorData.detail || ""}`);
     }
 
     const reciveData = await response.json();
@@ -94,7 +94,7 @@ export const fetchData = async () => {
 
     if (!response.ok) {
       const errorData = await response.json();
-      throw new Error(`失敗!\n${response.status} ${response.statusText} - ${errorData.detail || ""}`);
+      throw new Error(`Failed!\n${response.status} ${response.statusText} - ${errorData.detail || ""}`);
     }
 
     const reciveData = await response.json();

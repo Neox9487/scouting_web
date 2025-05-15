@@ -6,7 +6,7 @@ import TextField from "./widgets/TextField";
 import Counter from "./widgets/Counter";
 
 const BARGE_OPTIONS = [
-  { label: "No barge",         value: "none" },
+  { label: "No barge",     value: "none" },
   { label: "Park",         value: "park" },
   { label: "Shallow Cage", value: "shallow_cage" },
   { label: "Deep Cage",    value: "deep_cage" },
@@ -17,60 +17,59 @@ const LEAVE_OPTIONS = [
   { label: "Yes", value: true }, 
 ];
 
-const DataForm = ({ onSubmit, initialValues = {} }) => {
+const DataForm = ({ onSubmit}) => {
   const[formData, setFormData] = useState({
-    team_number: initialValues.team_number || "",
-    match: initialValues.match || "",
+    team_number: 0,
+    match: 0,
     auto: {
-      leave: initialValues.auto?.leave || false,
-      coral_l1: initialValues.auto?.coral_l1 || 0,
-      coral_l2: initialValues.auto?.coral_l2 || 0,
-      coral_l3: initialValues.auto?.coral_l3 || 0,
-      coral_l4: initialValues.auto?.coral_l4 || 0,
-      processor: initialValues.auto?.processor || 0,
-      net: initialValues.auto?.net || 0,
+      leave: false,
+      coral_l1: 0,
+      coral_l2: 0,
+      coral_l3: 0,
+      coral_l4: 0,
+      processor: 0,
+      net: 0,
     },
     teleop: {
-      coral_l1: initialValues.teleop?.coral_l1 || 0,
-      coral_l2: initialValues.teleop?.coral_l2 || 0,
-      coral_l3: initialValues.teleop?.coral_l3 || 0,
-      coral_l4: initialValues.teleop?.coral_l4 || 0,
-      processor: initialValues.teleop?.processor || 0,
-      net: initialValues.teleop?.net || 0,
-      barge: initialValues.teleop?.barge || "none",
+      coral_l1: 0,
+      coral_l2: 0,
+      coral_l3: 0,
+      coral_l4: 0,
+      processor: 0,
+      net: 0,
+      barge: "none",
     },
-    note: initialValues.note || "",
+    note: "",
   });
 
   useEffect(
     () => {
       setFormData({
-        team_number: initialValues.team_number || "",
-        match: initialValues.match || "",
+        team_number: 0,
+        match: 0,
         auto: {
-          leave: initialValues.auto?.leave || false,
-          coral_l1: initialValues.auto?.coral_l1 || 0,
-          coral_l2: initialValues.auto?.coral_l2 || 0,
-          coral_l3: initialValues.auto?.coral_l3 || 0,
-          coral_l4: initialValues.auto?.coral_l4 || 0,
-          processor: initialValues.auto?.processor || 0,
-          net: initialValues.auto?.net || 0,
+          leave: false,
+          coral_l1: 0,
+          coral_l2: 0,
+          coral_l3: 0,
+          coral_l4: 0,
+          processor: 0,
+          net: 0,
         },
         teleop: {
-          coral_l1: initialValues.teleop?.coral_l1 || 0,
-          coral_l2: initialValues.teleop?.coral_l2 || 0,
-          coral_l3: initialValues.teleop?.coral_l3 || 0,
-          coral_l4: initialValues.teleop?.coral_l4 || 0,
-          processor: initialValues.teleop?.processor || 0,
-          net: initialValues.teleop?.net || 0,
-          barge: initialValues.teleop?.barge || "none",
+          coral_l1: 0,
+          coral_l2: 0,
+          coral_l3: 0,
+          coral_l4: 0,
+          processor: 0,
+          net: 0,
+          barge: "none",
         },
-        note: initialValues.note || "",
+        note: "",
       });
-    }, [initialValues]
+    }, []
   )
 
-  // Input change handler
   const handleInputChange = (section, field, value) => {
     if (["team_number", "match"].includes(field)) {
       value = parseInt(value, 10) || 0;

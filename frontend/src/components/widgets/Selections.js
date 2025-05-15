@@ -8,7 +8,7 @@ const Selections =  ({label, options, onChange, ...props}) => {
         {
           options.map(
             (option) => (
-              <button type="button" onClick={() => onChange(option)}>
+              <button className={option.value === props.value?.value ? "selected" : ""} key={option.value} type="button" onClick={() => onChange(option)}>
                 {option.label}
               </button>
             )

@@ -14,16 +14,15 @@ function ScoutingPage() {
 
     try {
       const result = await submitData(formData); 
-
       if (result && result.error === false) {
-        setMessage("數據提交成功！");
+        setMessage("Finished!\nReload the page to submit another data.");
         setIsError(false);
       } else {
-        throw new Error(result?.message || "後端提交數據失敗");
+        throw new Error(result?.message || "Failed!");
       }
 
     } catch (error) {
-      setMessage(`數據提交失敗: ${error.message || "未知錯誤"}`); 
+      setMessage(`Failed: ${error.message || "IDK what happened"}`); 
       setIsError(true);
     } finally {
       setIsLoading(false);
@@ -33,7 +32,7 @@ function ScoutingPage() {
   return (
     <div style={{ padding: "20px" }}>
       <h1>Scouting</h1>
-      <DataForm onSubmit={handleSubmit} initialValues={{}} />
+      <DataForm onSubmit={handleSubmit}/>
       {isLoading && <p>提交中...</p>}
       {message && (
         <p className={isError ? "message error" : "message success"}>
