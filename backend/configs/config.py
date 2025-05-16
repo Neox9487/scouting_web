@@ -14,9 +14,9 @@ CONFIG_MODULE = {
   }
 }
 
-if not isfile("./frontend/config.json"):
+if not isfile("./backend/config.json"):
   try:
-    with open("./frontend/config.json", "w") as f:
+    with open("./backend/config.json", "w") as f:
       Json.dump(CONFIG_MODULE, f)
   except Exception as e:
     raise Exception(f"Error creating config file: {e}")
@@ -26,8 +26,7 @@ if not isfile("./frontend/config.json"):
 
 else:
   try:
-    with open("./frontend/config.json", "r") as f:
-      config = Json.load(f)
+    config = Json.load("./backend/config.json")
   except Exception as e:
     raise Exception(f"Error reading config file: {e}")
   finally:
@@ -41,9 +40,8 @@ else:
 HOST = CONFIG_MODULE["host"]
 PORT = CONFIG_MODULE["port"]
 DEBUG = CONFIG_MODULE["debug"]
-DATABASE = CONFIG_MODULE["database"]
-DATABASE_HOST = DATABASE["host"]
-DATABASE_PORT = DATABASE["port"]
-DATABASE_USER = DATABASE["user"]
-DATABASE_PASSWORD = DATABASE["password"]
-DATABASE_NAME = DATABASE["database"]
+DATABASE_HOST = CONFIG_MODULE["database"]["host"]
+DATABASE_PORT = CONFIG_MODULE["database"]["port"]
+DATABASE_USER = CONFIG_MODULE["database"]["user"]
+DATABASE_PASSWORD = CONFIG_MODULE["database"]["password"]
+DATABASE_NAME = CONFIG_MODULE["database"]["database"]

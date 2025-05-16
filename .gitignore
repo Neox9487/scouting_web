@@ -24,3 +24,5 @@ yarn-debug.log*
 yarn-error.log*
 
 service_account.json
+
+./backend/config.json

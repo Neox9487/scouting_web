@@ -16,5 +16,5 @@ class Json:
 
   @staticmethod
   def load(file):
-      with open(file, "rb") as f:
-        return orjson.loads(f.read())
+    with open(file, "rb") as f:
+      return orjson.loads(f.read())
