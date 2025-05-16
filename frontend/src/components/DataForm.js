@@ -5,6 +5,30 @@ import Selections from "./widgets/Selections";
 import TextField from "./widgets/TextField";
 import Counter from "./widgets/Counter";
 
+const INITIAL_FORM = {
+  team_number: 0,
+  match: 0,
+  auto: {
+    leave: false,
+    coral_l1: 0,
+    coral_l2: 0,
+    coral_l3: 0,
+    coral_l4: 0,
+    processor: 0,
+    net: 0,
+  },
+  teleop: {
+    coral_l1: 0,
+    coral_l2: 0,
+    coral_l3: 0,
+    coral_l4: 0,
+    processor: 0,
+    net: 0,
+    barge: "none",
+  },
+  note: "",
+};
+
 const BARGE_OPTIONS = [
   { label: "No barge",     value: "none" },
   { label: "Park",         value: "park" },
@@ -44,29 +68,7 @@ const DataForm = ({ onSubmit}) => {
 
   useEffect(
     () => {
-      setFormData({
-        team_number: 0,
-        match: 0,
-        auto: {
-          leave: false,
-          coral_l1: 0,
-          coral_l2: 0,
-          coral_l3: 0,
-          coral_l4: 0,
-          processor: 0,
-          net: 0,
-        },
-        teleop: {
-          coral_l1: 0,
-          coral_l2: 0,
-          coral_l3: 0,
-          coral_l4: 0,
-          processor: 0,
-          net: 0,
-          barge: "none",
-        },
-        note: "",
-      });
+      setFormData(INITIAL_FORM);
     }, []
   )
 
@@ -159,21 +161,25 @@ const DataForm = ({ onSubmit}) => {
       </div>
 
       {/* Auto Phase */}
-      <h3>Auto Phase</h3>
-      {/* Auto Coral*/}
+      <h2>Auto Phase</h2>
+      {/* Leave */}
       <div className="section-box">
-        {/* Leave */}
         <div className="selections-field">
           <Selections
-            label="Leave"
+            label={"Leave"}
+            className="leave"
             options={LEAVE_OPTIONS} 
             value={formData.auto.leave}
             onChange={(selectedValue) => handleInputChange("auto", "leave", selectedValue)}
           />
         </div>
+      </div>
+        
+      {/* Auto Coral*/}
+      <div className="section-box">
         {["l1", "l2", "l3", "l4"].map(level => (
           <div key={`auto_${level}`} className="counter-field">
-            <label>{level.toUpperCase()}</label>
+            <h3>{level.toUpperCase()}</h3>
             <Counter
               label={`${level.toUpperCase()}`} 
               value={formData.auto[`coral_${level}`]}
@@ -185,8 +191,9 @@ const DataForm = ({ onSubmit}) => {
         ))}
         {/* Auto Processor and Net*/}
         <div className="counter-field">
-          <label>Processor</label>
+          <h3>Processor</h3>
           <Counter
+            className="processor"
             label="Processor"
             value={formData.auto.processor}
             onChange={(e) => handleCounterInputChange("auto", "processor", e.target.value)}
@@ -195,8 +202,9 @@ const DataForm = ({ onSubmit}) => {
           />
         </div>
         <div className="counter-field">
-          <label>Net</label>
+          <h3>Net</h3>
           <Counter
+            className="net"
             label="Net"
             value={formData.auto.net}
             onChange={(e) => handleCounterInputChange("auto", "net", e.target.value)}
@@ -207,12 +215,12 @@ const DataForm = ({ onSubmit}) => {
       </div>
 
       {/* Teleop Phase */}
-      <h3>Teleop Phase</h3>
+      <h2>Teleop Phase</h2>
       {/* Teleop Coral*/}
       <div className="section-box">
         {["l1", "l2", "l3", "l4"].map(level => (
           <div key={`teleop_${level}`} className="counter-field">
-            <label>{level.toUpperCase()}</label>
+            <h3>{level.toUpperCase()}</h3>
             <Counter
               label={`${level.toUpperCase()}`} 
               value={formData.teleop[`coral_${level}`]}
@@ -225,8 +233,9 @@ const DataForm = ({ onSubmit}) => {
       
         {/* Teleop Processor and Net*/}
         <div className="counter-field">
-          <label>Processor</label>
+          <h3>Processor</h3>
           <Counter
+            className="processor"
             label="Processor"
             value={formData.teleop.processor}
             onChange={(e) => handleCounterInputChange("teleop", "processor", e.target.value)}
@@ -235,8 +244,9 @@ const DataForm = ({ onSubmit}) => {
           />
         </div>
         <div className="counter-field">
-          <label>Net</label>
+          <h3>Net</h3>
           <Counter
+            className="net"
             label="Net"
             value={formData.teleop.net}
             onChange={(e) => handleCounterInputChange("teleop", "net", e.target.value)}
@@ -249,12 +259,13 @@ const DataForm = ({ onSubmit}) => {
       <div className="section-box">
         <div className="selections-field">
           <Selections
+            className="barge"
             value={formData.teleop.barge}
             onChange={(selectedValue) => handleInputChange("teleop", "barge", selectedValue)}
             options={BARGE_OPTIONS} 
           />
         </div>
-        </div>
+      </div>
       {/* Note */}
       <div className="form-field"> 
         <TextField 

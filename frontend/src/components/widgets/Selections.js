@@ -3,8 +3,8 @@ import React from "react";
 const Selections =  ({label, options, onChange, ...props}) => {
   return (
     <div style={{marginBottom:"10px"}}>
-      <label>{label}</label>
-      <div {...props}>
+      <h3>{label}</h3>
+      <div className="selection-options" {...props}>
         {
           options.map(
             (option) => (
