@@ -14,21 +14,22 @@ CONFIG_MODULE = {
   }
 }
 
-if not isfile("config.json"):
+if not isfile("./frontend/config.json"):
   try:
-    with open("config.json", "w") as f:
+    with open("./frontend/config.json", "w") as f:
       Json.dump(CONFIG_MODULE, f)
   except Exception as e:
-    print(f"Error creating config file: {e}")
+    raise Exception(f"Error creating config file: {e}")
   finally:
     print("Config file created. Please edit it and run the program again.")
+    exit(0)
 
 else:
   try:
-    with open("config.json", "r") as f:
+    with open("./frontend/config.json", "r") as f:
       config = Json.load(f)
   except Exception as e:
-    print(f"Error loading config file: {e}")
+    raise Exception(f"Error reading config file: {e}")
   finally:
     for key, value in config.items():
       if isinstance(value, dict):

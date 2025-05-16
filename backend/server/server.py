@@ -1,8 +1,10 @@
 import fastapi
 
 class Server:
-  def __init__(self, host="0.0.0.0", port=8000):  
+  def __init__(self, host="0.0.0.", port=8000):  
     self.app = fastapi.FastAPI()
+    self.host = host
+    self.port = port
     @self.app.get("/")
     def root():
       return {"message": "Hello, you got wrong way ヽ(･∀･)ﾉ"}
@@ -25,4 +27,4 @@ class Server:
     
   def run(self):
     import uvicorn
-    uvicorn.run(self.app, host="0.0.0.0", port=8000)
+    uvicorn.run(self.app, host=self.host, port=self.port)
