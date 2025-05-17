@@ -1,4 +1,4 @@
-from utils import Json
+from modules import Json
 from os.path import isfile
 
 CONFIG_MODULE = {

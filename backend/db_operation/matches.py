@@ -56,7 +56,8 @@ class Matches:
         teleop_processor INT, 
         teleop_net INT, 
         teleop_barge VARCHAR(50), 
-        note VARCHAR(255))"""
+        note VARCHAR(255)),
+        UNIQUE KEY uniq_match_team (match, team_number)"""
     )
     self.db.commit()
 
