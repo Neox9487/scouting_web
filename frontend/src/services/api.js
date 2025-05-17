@@ -3,6 +3,7 @@ const API_BASE_URL = "http://localhost:8000";
 // 將場次上傳至伺服器
 export const submitData = async (data) => {
   try {
+    console.log("Submitting data:", data);
     const response = await fetch(`${API_BASE_URL}/submit/`, 
       {
         method: "POST",

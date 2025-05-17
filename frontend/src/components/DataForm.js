@@ -170,7 +170,7 @@ const DataForm = ({ onSubmit}) => {
             className="leave"
             options={LEAVE_OPTIONS} 
             value={formData.auto.leave}
-            onChange={(selectedValue) => handleInputChange("auto", "leave", selectedValue)}
+            onChange={(selectedValue) => handleInputChange("auto", "leave", selectedValue === true || selectedValue === "true" ? true : false)}
           />
         </div>
       </div>
@@ -261,7 +261,7 @@ const DataForm = ({ onSubmit}) => {
           <Selections
             className="barge"
             value={formData.teleop.barge}
-            onChange={(selectedValue) => handleInputChange("teleop", "barge", selectedValue)}
+            onChange={(selectedOption) => handleInputChange("teleop", "barge", selectedOption.value)}
             options={BARGE_OPTIONS} 
           />
         </div>
