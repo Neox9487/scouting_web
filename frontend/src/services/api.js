@@ -64,7 +64,7 @@ export const deleteData = async (teamNumber, match) => {
 };
 
 // 更新場次資料
-export const updateData = async (data, team_number, ) => {
+export const updateData = async (data) => {
   try {
     const response = await fetch( `${API_BASE_URL}/update/`,
       {
@@ -72,7 +72,7 @@ export const updateData = async (data, team_number, ) => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ data, team_number })
+        body: JSON.stringify(data)
       }
     ) 
 

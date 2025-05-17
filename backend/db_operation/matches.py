@@ -56,8 +56,8 @@ class Matches:
         teleop_processor INT, 
         teleop_net INT, 
         teleop_barge VARCHAR(50), 
-        note VARCHAR(255)),
-        UNIQUE KEY uniq_match_team (match, team_number)"""
+        note VARCHAR(255),
+        UNIQUE KEY uniq_match_team (`match`, team_number))"""
     )
     self.db.commit()
 
@@ -108,7 +108,6 @@ class Matches:
     self.db.commit()
 
   def update_match(self, data):
-    """Update match data in the database."""
     self.cursor.execute(
       f"""
       UPDATE {TABLE_NAME} 
