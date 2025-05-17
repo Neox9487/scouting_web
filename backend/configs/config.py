@@ -10,14 +10,14 @@ CONFIG_MODULE = {
     "port": 5432,
     "user": "user",
     "password": "password",
-    "database": "database"
+    "database": "database_name",
+    "table_name": "table_name"
   }
 }
 
 if not isfile("./backend/config.json"):
   try:
-    with open("./backend/config.json", "w") as f:
-      Json.dump(CONFIG_MODULE, f)
+    Json.dump(CONFIG_MODULE, "./backend/config.json")
   except Exception as e:
     raise Exception(f"Error creating config file: {e}")
   finally:
@@ -45,3 +45,4 @@ DATABASE_PORT = CONFIG_MODULE["database"]["port"]
 DATABASE_USER = CONFIG_MODULE["database"]["user"]
 DATABASE_PASSWORD = CONFIG_MODULE["database"]["password"]
 DATABASE_NAME = CONFIG_MODULE["database"]["database"]
+TABLE_NAME = CONFIG_MODULE["database"]["table_name"]

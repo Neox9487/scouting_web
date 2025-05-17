@@ -1,6 +1,6 @@
 import mysql.connector
 
-from configs import DATABASE_HOST, DATABASE_USER, DATABASE_PASSWORD, DATABASE_NAME
+from configs import DATABASE_HOST, DATABASE_USER, DATABASE_PASSWORD, DATABASE_NAME, TABLE_NAME
 
 # module:
 # {
@@ -36,11 +36,12 @@ class Matches:
       database=DATABASE_NAME
     )
     self.cursor = self.db.cursor()
-    self.cursor.execute("""
-      CREATE TABLE IF NOT EXISTS matches (
+    self.cursor.execute(f"CREATE DATABASE IF NOT EXISTS {DATABASE_NAME}")
+    self.cursor.execute(f"""
+      CREATE TABLE IF NOT EXISTS {TABLE_NAME}(
         id INT AUTO_INCREMENT PRIMARY KEY, 
         team_number INT, 
-        match INT, 
+        `match` INT, 
         auto_leave BOOLEAN, 
         auto_coral_l1 INT, 
         auto_coral_l2 INT, 
@@ -57,6 +58,31 @@ class Matches:
         teleop_barge VARCHAR(50), 
         note VARCHAR(255))"""
     )
+    self.db.commit()
+
+  def add_match(self, data):
+    self.cursor.execute(f"""
+      INSERT INTO {TABLE_NAME} (
+        team_number, 
+        `match`, 
+        auto_leave, 
+        auto_coral_l1, 
+        auto_coral_l2, 
+        auto_coral_l3, 
+        auto_coral_l4, 
+        auto_processor, 
+        auto_net, 
+        teleop_coral_l1, 
+        teleop_coral_l2, 
+        teleop_coral_l3, 
+        teleop_coral_l4, 
+        teleop_processor, 
+        teleop_net, 
+        teleop_barge, 
+        note
+      )
+      VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)""",
+      (data["team_number"], data["match"], data["auto"]["leave"], data["auto"]["coral_l1"], data["auto"]["coral_l2"], data["auto"]["coral_l3"], data["auto"]["coral_l4"], data["auto"]["processor"], data["auto"]["net"], data["teleop"]["coral_l1"], data["teleop"]["coral_l2"], data["teleop"]["coral_l3"], data["teleop"]["coral_l4"], data["teleop"]["processor"], data["teleop"]["net"], data["teleop"]["barge"], data["note"]))
     self.db.commit()
 
   def delete_match(self, match, team_number):
