@@ -1,1 +1,1 @@
-from .MatchData import MatchData
+from .message import MatchData, TeamMatch

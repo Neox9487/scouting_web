@@ -82,12 +82,71 @@ class Matches:
         note
       )
       VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)""",
-      (data["team_number"], data["match"], data["auto"]["leave"], data["auto"]["coral_l1"], data["auto"]["coral_l2"], data["auto"]["coral_l3"], data["auto"]["coral_l4"], data["auto"]["processor"], data["auto"]["net"], data["teleop"]["coral_l1"], data["teleop"]["coral_l2"], data["teleop"]["coral_l3"], data["teleop"]["coral_l4"], data["teleop"]["processor"], data["teleop"]["net"], data["teleop"]["barge"], data["note"]))
+      (data["team_number"], 
+       data["match"], 
+       data["auto"]["leave"], 
+       data["auto"]["coral_l1"], 
+       data["auto"]["coral_l2"], 
+       data["auto"]["coral_l3"], 
+       data["auto"]["coral_l4"], 
+       data["auto"]["processor"], 
+       data["auto"]["net"], 
+       data["teleop"]["coral_l1"], 
+       data["teleop"]["coral_l2"], 
+       data["teleop"]["coral_l3"], 
+       data["teleop"]["coral_l4"], 
+       data["teleop"]["processor"],
+       data["teleop"]["net"], 
+       data["teleop"]["barge"], 
+       data["note"])
+    )
     self.db.commit()
 
   def delete_match(self, match, team_number):
-    self.cursor.execute("DELETE FROM matches WHERE match = %s AND team_number = %s", (match, team_number))
+    self.cursor.execute(f"DELETE FROM {TABLE_NAME} WHERE match = %s AND team_number = %s", (match, team_number))
     self.db.commit()
+
+  def update_match(self, data):
+    """Update match data in the database."""
+    self.cursor.execute(
+      f"""
+      UPDATE {TABLE_NAME} 
+      SET auto_leave = %s, 
+          auto_coral_l1 = %s,
+          auto_coral_l2 = %s,
+          auto_coral_l3 = %s,
+          auto_coral_l4 = %s,
+          auto_processor = %s,
+          auto_net = %s,
+          teleop_coral_l1 = %s,
+          teleop_coral_l2 = %s,
+          teleop_coral_l3 = %s,
+          teleop_coral_l4 = %s,
+          teleop_processor = %s,
+          teleop_net = %s,
+          teleop_barge = %s,
+          note = %s
+      WHERE team_number = %s AND `match` = %s
+      """,
+      (data["auto"]["leave"],
+       data["auto"]["coral_l1"],
+       data["auto"]["coral_l2"],
+       data["auto"]["coral_l3"],
+       data["auto"]["coral_l4"],
+       data["auto"]["processor"],
+       data["auto"]["net"],
+       data["teleop"]["coral_l1"],
+       data["teleop"]["coral_l2"],
+       data["teleop"]["coral_l3"],
+       data["teleop"]["coral_l4"],
+       data["teleop"]["processor"],
+       data["teleop"]["net"],
+       data["teleop"]["barge"],
+       data["note"],
+       data["team_number"],
+       data["match"])  
+  )
+    self.db.commit()  
 
   def get_all_matches(self):
     self.cursor.execute("SELECT * FROM matches")

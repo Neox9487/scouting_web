@@ -1,4 +1,4 @@
-const API_BASE_URL = "http://localhost:8000";
+const API_BASE_URL = process.env.REACT_APP_API_URL
 
 // 將場次上傳至伺服器
 export const submitData = async (data) => {
@@ -20,6 +20,9 @@ export const submitData = async (data) => {
     }
 
     const reciveData = await response.json();
+    if (reciveData.error === true) {
+      throw new Error(`Failed!\n${reciveData.message}`);
+    }
     return reciveData;
   } 
   catch (error) {
@@ -48,6 +51,11 @@ export const deleteData = async (teamNumber, match) => {
     }
 
     const reciveData = await response.json();
+
+    if (reciveData.error === true) {
+      throw new Error(`Failed!\n${reciveData.message}`);
+    }
+
     return reciveData;
   } 
   catch (error) {
@@ -74,6 +82,11 @@ export const updateData = async (data, team_number, ) => {
     }
 
     const reciveData = await response.json();
+
+    if (reciveData.error === true) {
+      throw new Error(`Failed!\n${reciveData.message}`);
+    }
+
     return reciveData;
   }
   catch (error) {

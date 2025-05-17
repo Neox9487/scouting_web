@@ -1,4 +1,3 @@
-import fastapi
 from server import Server
 from db_operation import Matches
 

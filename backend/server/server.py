@@ -1,6 +1,6 @@
 import fastapi
 
-from modules import MatchData
+from modules import MatchData, TeamMatch
 from db_operation import Matches
 
 from fastapi.middleware.cors import CORSMiddleware
@@ -41,8 +41,12 @@ class Server:
         return {"error": True, "message": str(e)}
       
     @self.app.delete("/delete/")
-    def delete(data):
-      pass
+    def delete(data: TeamMatch):
+      try:
+        self.matches.delete_match(data.model_dump()["team_number"], data.model_dump()["match"])
+        return {"error": False, "message": "Data deleted!"}
+      except Exception as e:
+        return {"error": True, "message": str(e)}
 
     @self.app.put("/update/")
     def update(data: MatchData):

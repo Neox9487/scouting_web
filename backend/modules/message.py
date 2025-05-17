@@ -24,3 +24,7 @@ class MatchData(BaseModel):
   auto: AutoData
   teleop: TeleopData
   note: str
+
+class TeamMatch(BaseModel):
+  team_number: int
+  match: int
