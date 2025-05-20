@@ -32,7 +32,7 @@ function ScoutingPage() {
   return (
     <div style={{ padding: "20px" }}>
       <h1>Scouting</h1>
-      <DataForm onSubmit={handleSubmit}/>
+      <DataForm onSubmit={handleSubmit} initialData={null}/>
       {isLoading && <p>提交中...</p>}
       {message && (
         <p className={isError ? "message error" : "message success"}>

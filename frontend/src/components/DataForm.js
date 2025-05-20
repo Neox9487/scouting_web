@@ -41,7 +41,7 @@ const LEAVE_OPTIONS = [
   { label: "Yes", value: true }, 
 ];
 
-const DataForm = ({ onSubmit}) => {
+const DataForm = ({ onSubmit, initialData}) => {
   const[formData, setFormData] = useState({
     team_number: 0,
     match: 0,
@@ -68,7 +68,7 @@ const DataForm = ({ onSubmit}) => {
 
   useEffect(
     () => {
-      setFormData(INITIAL_FORM);
+      setFormData( initialData || INITIAL_FORM);
     }, []
   )
 
