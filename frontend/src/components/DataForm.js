@@ -69,7 +69,7 @@ const DataForm = ({ onSubmit, initialData}) => {
   useEffect(
     () => {
       setFormData( initialData || INITIAL_FORM);
-    }, []
+    }, [initialData]
   )
 
   const handleInputChange = (section, field, value) => {
