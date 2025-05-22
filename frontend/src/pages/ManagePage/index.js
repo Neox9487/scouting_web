@@ -46,24 +46,23 @@ const SortOptions = [
 function ManagePage() {
   const [data, setData] = useState([]);
   const [editing, setEditing] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [message, setMessage] = useState(null);
   const [isError, setIsError] = useState(false);
   const [sortType, setSortType] = useState("team_number");
 
   useEffect(() => {
-    const fetchDataFromAPI = async () => {
-      setIsLoading(true);
-      try {
-        const response = await fetchData();
-        setData(response.data);
-      } catch (error) {
-        setIsError(true);
+    fetchData()
+      .then((data) => {
+        setData(data);
+        setIsLoading(false);
+        setMessage(null);
+      })
+      .catch((error) => {
+        setIsLoading(false);
         setMessage("Error fetching data");
-      }
-      setIsLoading(false);
-    }
-    fetchDataFromAPI();
+        setIsError(true);
+      });
   }, []);
 
   const sortDataBy = (type) => {
@@ -93,15 +92,13 @@ function ManagePage() {
         }
 
         if (b.teleop.barge === "none") {
-          a_score += 0;
+          b_score += 0;
         } else if (b.teleop.barge === "park") {
-          a_score += 2;
-        }
-        else if (b.teleop.barge === "shallow_cage") {
-          a_score += 6;
-        }
-        else if (b.teleop.barge === "deep_cage") {
-          a_score += 12;
+          b_score += 2;
+        } else if (b.teleop.barge === "shallow_cage") {
+          b_score += 6;
+        } else if (b.teleop.barge === "deep_cage") {
+          b_score += 12;
         }
         return a_score - b_score;
       } else if (type === "processor") {
@@ -118,77 +115,51 @@ function ManagePage() {
         return (a.auto.coral_l1 + a.teleop.coral_l1) - (b.auto.coral_l1 + b.teleop.coral_l1);
       }
     })
-  }
-
-  const handleDelete = (teamNumber, match) => {
-    const deleteDataFromAPI = async () => {
-      setIsLoading(true);
-      try {
-        const response = await deleteData(teamNumber, match);
-        if (response.error === false) {
-          setMessage("Delete success");
-          refresh();
-          setIsError(false);
-        }
-        else {
-          setMessage("Delete failed");
-          setIsError(true);
-        }
-      } catch (error) {
-        setIsError(true);
-        setMessage("Error deleting data");
-      }
-      setIsLoading(false);
-    }
-    deleteDataFromAPI();
-  }
-
-  const handleUpdate = (data) => {
-    const updateDataFromAPI = async () => {
-      setIsLoading(true);
-      try {
-        const response = await updateData(data);
-        if (response.error === false) {
-          setMessage("Update success");
-          refresh();
-          setIsError(false);
-        }
-        else {
-          setMessage("Update failed");
-          setIsError(true);
-        }
-      }
-      catch (error) {
-        setIsError(true);
-        setMessage("Error updating data");
-      }
-      setIsLoading(false);
-    }
-    updateDataFromAPI();
+    setData(sortedData);
   }
 
   const refresh = () => {
-    const fetchDataFromAPI = async () => {
-      setIsLoading(true);
-      try {
-        const response = await fetchData();
-        if (response.error === false) {
-          setData(response.data);
-          setMessage("Refresh success");
-          setIsError(false);
-        }
-        else {
-          setMessage("Refresh failed");
-          setIsError(true);
-        }
-      } catch (error) {
-        setIsError(true);
+    setIsLoading(true);
+    fetchData()
+      .then((data) => {
+        setData(data);
+        setIsLoading(false);
+        setMessage(null);
+      })
+      .catch((error) => {
+        setIsLoading(false);
         setMessage("Error fetching data");
-      }
-      setIsLoading(false);
-    }
-    fetchDataFromAPI();
-  }
+        setIsError(true);
+      });
+  };
+
+  const handleUpdate = (updatedData) => {
+    updateData(updatedData)
+      .then(() => {
+        setData(data.map((item) => (item.id === updatedData.id ? updatedData : item)));
+        setMessage("Data updated successfully");
+        setIsError(false);
+      })
+      .catch((error) => {
+        setMessage("Error updating data");
+        setIsError(true);
+      });
+  };
+
+  const handleDelete = (teamNumber, match) => {
+    if (!window.confirm(`Delete team ${teamNumber} match ${match}?`)) return;
+    deleteData(teamNumber, match)
+      .then(() => {
+        setData(data.filter((item) => item.team_number !== teamNumber || item.match !== match));
+        setMessage("Data deleted successfully");
+        setIsError(false);
+      })
+      .catch((error) => {
+        setMessage("Error deleting data");
+        setIsError(true);
+    });
+  };
+  
 
   return (
     <>
@@ -198,24 +169,21 @@ function ManagePage() {
         {isError && <p className="error">{message}</p>}
         {message && <p className={isError ? "error" : "success"}>{message}</p>}
         <button onClick={refresh}>Refresh</button>
-        <div className="data-table">
+        <div className={`data-table-${isLoading ? "loading" : ""}`}>
           {/* Sort buttons */}
           <div className="sort-buttons">
-            {SortOptions.map((option) => (
-              <Selections
-                key={option.value}
-                label={option.label}
-                options={SortOptions}
-                value={sortType}
-                onChange={(selectedValue) => {
-                  setSortType(selectedValue.value);
-                  sortDataBy(selectedValue.value);
-                }}
-              />
-            ))}
+            <Selections
+              label="Sort By"
+              options={SortOptions}
+              value={SortOptions.find(option => option.value === sortType)}
+              onChange={(selectedValue) => {
+                setSortType(selectedValue.value);
+                sortDataBy(selectedValue.value);
+              }}
+            />
           </div>
           {/* Data table */}
-          <table>
+          <table className="data-table">
             <thead>
               <tr>
                 <th>Team Number</th>
@@ -228,6 +196,7 @@ function ManagePage() {
                 <th>L3</th>
                 <th>L2</th>
                 <th>L1</th>
+                <th>Barge</th>
                 <th>Actions</th>
               </tr>
             </thead>
@@ -244,6 +213,7 @@ function ManagePage() {
                   <td>{item.auto.coral_l3 + item.teleop.coral_l3}</td>
                   <td>{item.auto.coral_l2 + item.teleop.coral_l2}</td>
                   <td>{item.auto.coral_l1 + item.teleop.coral_l1}</td>
+                  <td>{item.teleop.barge}</td>
                   <td>
                     <button onClick={() => setEditing(item)}>Edit</button>
                     <button onClick={() => handleDelete(item.team_number, item.match)}>Delete</button>
@@ -253,11 +223,18 @@ function ManagePage() {
             </tbody>
           </table>
         </div>
+        {/* edit form*/}
         {editing && (
-          <DataForm
-            initialData={editing}
-            onSubmit={handleUpdate}
-          />
+          <div className="edit-form">
+            <h2>Edit Data</h2>
+            <DataForm
+              initialData={editing}
+              onSubmit={(updatedData) => {
+                handleUpdate(updatedData);
+                setEditing(null); 
+              }}
+            />
+          </div>
         )}
       </div>
     </>
