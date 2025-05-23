@@ -178,81 +178,78 @@ function ManagePage() {
   
 
   return (
-    <div className="container">
-      <div className="manage-page">
-        <h1>Manage Page</h1>
-        {isLoading && <p>Loading...</p>}
-        {isError && <p className="error">{message}</p>}
-        <button onClick={refresh}>Refresh</button>
-        <div className={`data-table-${isLoading ? "loading" : ""}`}>
-          {/* Sort buttons */}
-          <div className="sort-buttons">
-            <Selections
-              label="Sort By"
-              options={SortOptions}
-              value={SortOptions.find(option => option.value === sortType)}
-              onChange={(selectedValue) => {
-                setSortType(selectedValue.value);
-                sortData(selectedValue.value);
-              }}
-            />
-          </div>
-          {/* Data table */}
-          <table className="data-table">
-            <thead>
-              <tr>
-                <th>Team Number</th>
-                <th>Match</th>
-                <th>Auto Score</th>
-                <th>Teleop Score</th>
-                <th>Processor</th>
-                <th>Net</th>
-                <th>L4</th>
-                <th>L3</th>
-                <th>L2</th>
-                <th>L1</th>
-                <th>Barge</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {data.map((item) => (
-                <tr key={`${item.team_number}-${item.match}`}>
-                  <td>{item.team_number}</td>
-                  <td>{item.match}</td>
-                  <td>{(item.auto.leave*4 +item.auto.coral_l1*3 + item.auto.coral_l2*4 + item.auto.coral_l3*6 + item.auto.coral_l4*6 + item.auto.processor*6 + item.auto.net*4)}</td>
-                  <td>{getTeleopScore(item.teleop)}</td>
-                  <td>{item.auto.processor + item.teleop.processor}</td>
-                  <td>{item.auto.net + item.teleop.net}</td>
-                  <td>{item.auto.coral_l4 + item.teleop.coral_l4}</td>
-                  <td>{item.auto.coral_l3 + item.teleop.coral_l3}</td>
-                  <td>{item.auto.coral_l2 + item.teleop.coral_l2}</td>
-                  <td>{item.auto.coral_l1 + item.teleop.coral_l1}</td>
-                  <td>{item.teleop.barge}</td>
-                  <td>
-                    <button onClick={() => setEditing(item)}>Edit</button>
-                    <button onClick={() => handleDelete(item.team_number, item.match)}>Delete</button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+    <div className="manage-page">
+      {isLoading && <p>Loading...</p>}
+      {isError && <p className="error">{message}</p>}
+      <button onClick={refresh}>Refresh</button>
+      <div className={`data-table-${isLoading ? "loading" : ""}`}>
+        {/* Sort buttons */}
+        <div className="sort-buttons">
+          <Selections
+            label="Sort By"
+            options={SortOptions}
+            value={SortOptions.find(option => option.value === sortType)}
+            onChange={(selectedValue) => {
+              setSortType(selectedValue.value);
+              sortData(selectedValue.value);
+            }}
+          />
         </div>
-        {/* edit form*/}
-        {editing && (
-          <div className="edit-form">
-            <h2>Edit Data</h2>
-            <DataForm
-              initialData={editing}
-              onSubmit={(updatedData) => {
-                handleUpdate(updatedData);
-                setEditing(null); 
-              }}
-            />
-            <button onClick={() => setEditing(null)}>Cancel</button>
-          </div>
-        )}
+        {/* Data table */}
+        <table className="data-table">
+          <thead>
+            <tr>
+              <th>Team Number</th>
+              <th>Match</th>
+              <th>Auto Score</th>
+              <th>Teleop Score</th>
+              <th>Processor</th>
+              <th>Net</th>
+              <th>L4</th>
+              <th>L3</th>
+              <th>L2</th>
+              <th>L1</th>
+              <th>Barge</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {data.map((item) => (
+              <tr key={`${item.team_number}-${item.match}`}>
+                <td>{item.team_number}</td>
+                <td>{item.match}</td>
+                <td>{(item.auto.leave*4 +item.auto.coral_l1*3 + item.auto.coral_l2*4 + item.auto.coral_l3*6 + item.auto.coral_l4*6 + item.auto.processor*6 + item.auto.net*4)}</td>
+                <td>{getTeleopScore(item.teleop)}</td>
+                <td>{item.auto.processor + item.teleop.processor}</td>
+                <td>{item.auto.net + item.teleop.net}</td>
+                <td>{item.auto.coral_l4 + item.teleop.coral_l4}</td>
+                <td>{item.auto.coral_l3 + item.teleop.coral_l3}</td>
+                <td>{item.auto.coral_l2 + item.teleop.coral_l2}</td>
+                <td>{item.auto.coral_l1 + item.teleop.coral_l1}</td>
+                <td>{item.teleop.barge}</td>
+                <td>
+                  <button onClick={() => setEditing(item)}>Edit</button>
+                  <button onClick={() => handleDelete(item.team_number, item.match)}>Delete</button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
+      {/* edit form*/}
+      {editing && (
+        <div className="edit-form">
+          <h2>Edit Data</h2>
+          <DataForm
+            initialData={editing}
+            onSubmit={(updatedData) => {
+              handleUpdate(updatedData);
+              setEditing(null); 
+            }}
+          />
+          <button onClick={() => setEditing(null)}>Cancel</button>
+        </div>
+      )}
     </div>
   )
 }

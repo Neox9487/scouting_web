@@ -2,7 +2,7 @@ import React  from "react";
 
 const Counter = ({ lable, value, onChange, onIncrement, onDecrement , ...props}) => {
   return (
-    <div style={{marginBottom: "10px"}}>
+    <div>
       <h3>{lable}</h3>
       <div {...props}>
         <button onClick={onIncrement} type="button">＋</button>

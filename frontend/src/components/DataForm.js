@@ -73,11 +73,8 @@ const DataForm = ({ onSubmit, initialData}) => {
   )
 
   const handleInputChange = (section, field, value) => {
-    if (["team_number", "match"].includes(field)) {
-      value = parseInt(value, 10) || 0;
-    }
     setFormData(prevState => {
-      if (section) { 
+      if (section) {
         return {
           ...prevState,
           [section]: {
@@ -85,14 +82,14 @@ const DataForm = ({ onSubmit, initialData}) => {
             [field]: value,
           },
         };
-      } else { 
+      } else {
         return {
           ...prevState,
           [field]: value,
         };
       }
     });
-  }
+  };
   
   // Increment handler
   const handleIncrement = (section, field) => {
@@ -131,33 +128,35 @@ const DataForm = ({ onSubmit, initialData}) => {
   // Handle subission
   const handleSubmit = (event) => {
     event.preventDefault();
-    onSubmit(formData);
+    const dataToSubmit = {
+      ...formData,
+      team_number: parseInt(formData.team_number, 10) || 0,
+      match: parseInt(formData.match, 10) || 0,
+    };
+    onSubmit(dataToSubmit);
   };
 
   return (
     <form onSubmit={handleSubmit}>
       {/* Team Number and Match Number */}
+      <h2>Info</h2>
       <div className="section-box">
-        <div className="form-field">
-          <InputField
-            label="Team Number" 
-            type="number"
-            value={formData.team_number}
-            onChange={(e) => handleInputChange(null, "team_number", e.target.value)} 
-            required 
-            min="1"
-          />
-        </div>
-        <div className="form-field">
-          <InputField
-            label="Match"
-            type="number"
-            value={formData.match}
-            onChange={(e) => handleInputChange(null, "match", e.target.value)} 
-            required 
-            min="1"
-          />
-        </div>
+        <InputField
+          label="Team Number" 
+          type="number"
+          value={formData.team_number}
+          onChange={(e) => handleInputChange(null, "team_number", e.target.value)} 
+          required 
+          min="1"
+        />
+        <InputField
+          label="Match"
+          type="number"
+          value={formData.match}
+          onChange={(e) => handleInputChange(null, "match", e.target.value)} 
+          required 
+          min="1"
+        />
       </div>
 
       {/* Auto Phase */}
@@ -170,7 +169,7 @@ const DataForm = ({ onSubmit, initialData}) => {
             className="leave"
             options={LEAVE_OPTIONS} 
             value={formData.auto.leave}
-            onChange={(selectedValue) => handleInputChange("auto", "leave", selectedValue === true || selectedValue === "true" ? true : false)}
+            onChange={(selectedValue) => handleInputChange("auto", "leave", selectedValue.value === true || selectedValue.value === "true" ? true : false)}
           />
         </div>
       </div>
@@ -267,7 +266,7 @@ const DataForm = ({ onSubmit, initialData}) => {
         </div>
       </div>
       {/* Note */}
-      <div className="form-field"> 
+      <div className="section-box"> 
         <TextField 
           label={null}
           value={formData.note}

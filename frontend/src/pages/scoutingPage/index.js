@@ -30,8 +30,7 @@ function ScoutingPage() {
   };
 
   return (
-    <div className="container">
-      <h1>Scouting</h1>
+    <div>
       <DataForm onSubmit={handleSubmit} initialData={null}/>
       {isLoading && <p>提交中...</p>}
       {message && (

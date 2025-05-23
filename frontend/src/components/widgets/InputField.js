@@ -2,7 +2,7 @@ import React from "react";
 
 const InputField = ({ label, type, value, onChange, ...props}) => {
   return (
-    <div style={{ marginBottom: "10px" }}>
+    <div>
       <h3>{label} </h3>
       <input 
         type={type} 
