@@ -30,7 +30,7 @@ function ScoutingPage() {
   };
 
   return (
-    <div style={{ padding: "20px" }}>
+    <div className="container">
       <h1>Scouting</h1>
       <DataForm onSubmit={handleSubmit} initialData={null}/>
       {isLoading && <p>提交中...</p>}

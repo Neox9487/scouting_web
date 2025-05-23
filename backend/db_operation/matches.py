@@ -32,11 +32,11 @@ class Matches:
     self.db = mysql.connector.connect(
       host=DATABASE_HOST,
       user=DATABASE_USER,
-      password=DATABASE_PASSWORD,
-      database=DATABASE_NAME
+      password=DATABASE_PASSWORD
     )
     self.cursor = self.db.cursor()
     self.cursor.execute(f"CREATE DATABASE IF NOT EXISTS {DATABASE_NAME}")
+    self.cursor.execute(f"USE {DATABASE_NAME}")
     self.cursor.execute(f"""
       CREATE TABLE IF NOT EXISTS {TABLE_NAME}(
         id INT AUTO_INCREMENT PRIMARY KEY, 
@@ -104,7 +104,7 @@ class Matches:
     self.db.commit()
 
   def delete_match(self, match, team_number):
-    self.cursor.execute(f"DELETE FROM {TABLE_NAME} WHERE match = %s AND team_number = %s", (match, team_number))
+    self.cursor.execute(f"DELETE FROM {TABLE_NAME} WHERE `match` = %s AND team_number = %s", (match, team_number))
     self.db.commit()
 
   def update_match(self, data):
@@ -149,6 +149,6 @@ class Matches:
     self.db.commit()  
 
   def get_all_matches(self):
-    self.cursor.execute("SELECT * FROM matches")
+    self.cursor.execute(f"SELECT * FROM {TABLE_NAME}")
     return self.cursor.fetchall()
     

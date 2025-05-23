@@ -1,6 +1,6 @@
 import fastapi
 
-from modules import MatchData, TeamMatch
+from modules import MatchData, TeamMatch, to_dict_list
 from db_operation import Matches
 
 from fastapi.middleware.cors import CORSMiddleware
@@ -13,7 +13,7 @@ class Server:
       allow_origins=["*"], 
       allow_credentials=True,
       allow_methods=["*"],
-      allow_headers=["*"],
+      allow_headers=["*"]
     )
     self.host = host
     self.port = port
@@ -27,7 +27,7 @@ class Server:
     def fetch():
       try:
         matches = self.matches.get_all_matches()
-        return {"error":False, "data": matches, "message": "Data fetched!"}
+        return {"error":False, "data": to_dict_list(matches), "message": "Data fetched!"}
       except Exception as e:
         return {"error": True, "message": str(e)}
 
@@ -43,7 +43,7 @@ class Server:
     @self.app.delete("/delete/")
     def delete(data: TeamMatch):
       try:
-        self.matches.delete_match(data.model_dump()["team_number"], data.model_dump()["match"])
+        self.matches.delete_match(data.model_dump()["match"], data.model_dump()["team_number"])
         return {"error": False, "message": "Data deleted!"}
       except Exception as e:
         return {"error": True, "message": str(e)}
@@ -55,3 +55,4 @@ class Server:
   def run(self):
     import uvicorn
     uvicorn.run(self.app, host=self.host, port=self.port)
+    

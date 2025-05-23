@@ -39,7 +39,7 @@ const SortOptions = [
   { label: "Net", value: "net" },
   { label: "L4", value: "L4" },
   { label: "L3", value: "L3" },
-  { label: "L2", value: "L2" },
+  { label: "L2", value: "L2" }, 
   { label: "L1", value: "L1" },
 ];
 
@@ -54,18 +54,21 @@ function ManagePage() {
   useEffect(() => {
     fetchData()
       .then((data) => {
-        setData(data);
+        const sortedData = [...data.data].sort((a, b) => {
+          return a.team_number - b.team_number;
+        })
+        setData(sortedData);
         setIsLoading(false);
         setMessage(null);
       })
       .catch((error) => {
         setIsLoading(false);
-        setMessage("Error fetching data");
+        setMessage("Error fetching data: error"+error);
         setIsError(true);
       });
   }, []);
 
-  const sortDataBy = (type) => {
+  const sortData = (type) => {
     const sortedData = [...data].sort((a, b) => {
       if (type === "team_number") {
         return a.team_number - b.team_number;
@@ -113,16 +116,29 @@ function ManagePage() {
         return (a.auto.coral_l2 + a.teleop.coral_l2) - (b.auto.coral_l2 + b.teleop.coral_l2);
       } else if (type === "L1") {
         return (a.auto.coral_l1 + a.teleop.coral_l1) - (b.auto.coral_l1 + b.teleop.coral_l1);
+      } else {
+        return a.match - b.match;
       }
     })
     setData(sortedData);
   }
 
+  const getTeleopScore = (teleop) => {
+    let score = teleop.coral_l1 * 3 + teleop.coral_l2 * 4 + teleop.coral_l3 * 6 + teleop.coral_l4 * 6 + teleop.processor * 6 + teleop.net * 4;
+    if (teleop.barge === "park") score += 2;
+    else if (teleop.barge === "shallow_cage") score += 6;
+    else if (teleop.barge === "deep_cage") score += 12;
+    return score;
+  };
+
   const refresh = () => {
     setIsLoading(true);
     fetchData()
       .then((data) => {
-        setData(data);
+        const sortedData = [...data.data].sort((a, b) => {
+          return a.team_number - b.team_number;
+        })
+        setData(sortedData);
         setIsLoading(false);
         setMessage(null);
       })
@@ -155,19 +171,18 @@ function ManagePage() {
         setIsError(false);
       })
       .catch((error) => {
-        setMessage("Error deleting data");
+        setMessage("Error deleting data: "+error);
         setIsError(true);
     });
   };
   
 
   return (
-    <>
+    <div className="container">
       <div className="manage-page">
         <h1>Manage Page</h1>
         {isLoading && <p>Loading...</p>}
         {isError && <p className="error">{message}</p>}
-        {message && <p className={isError ? "error" : "success"}>{message}</p>}
         <button onClick={refresh}>Refresh</button>
         <div className={`data-table-${isLoading ? "loading" : ""}`}>
           {/* Sort buttons */}
@@ -178,7 +193,7 @@ function ManagePage() {
               value={SortOptions.find(option => option.value === sortType)}
               onChange={(selectedValue) => {
                 setSortType(selectedValue.value);
-                sortDataBy(selectedValue.value);
+                sortData(selectedValue.value);
               }}
             />
           </div>
@@ -206,7 +221,7 @@ function ManagePage() {
                   <td>{item.team_number}</td>
                   <td>{item.match}</td>
                   <td>{(item.auto.leave*4 +item.auto.coral_l1*3 + item.auto.coral_l2*4 + item.auto.coral_l3*6 + item.auto.coral_l4*6 + item.auto.processor*6 + item.auto.net*4)}</td>
-                  <td>{(item.teleop.coral_l1*3 + item.teleop.coral_l2*4 + item.teleop.coral_l3*6 + item.teleop.coral_l4*6 + item.teleop.processor*6 + item.teleop.net*4)}</td>
+                  <td>{getTeleopScore(item.teleop)}</td>
                   <td>{item.auto.processor + item.teleop.processor}</td>
                   <td>{item.auto.net + item.teleop.net}</td>
                   <td>{item.auto.coral_l4 + item.teleop.coral_l4}</td>
@@ -234,10 +249,11 @@ function ManagePage() {
                 setEditing(null); 
               }}
             />
+            <button onClick={() => setEditing(null)}>Cancel</button>
           </div>
         )}
       </div>
-    </>
+    </div>
   )
 }
 
