@@ -30,14 +30,14 @@ function ScoutingPage() {
   };
 
   return (
-    <div>
+    <div className="scouting-page">
       <DataForm onSubmit={handleSubmit} initialData={null}/>
-      {isLoading && <p>提交中...</p>}
-      {message && (
-        <p className={isError ? "message error" : "message success"}>
+      {/* {message && (
+        <p className={isError ? "error" : ""}>
           {message}
         </p>
       )}
+      {isLoading && <h2>提交中...</h2>} */}
     </div>
   );
 }

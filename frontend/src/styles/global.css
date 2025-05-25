@@ -19,7 +19,7 @@
   --button-on-hover-color: #21196d;
   --buttin-text-color: #6182c0;
 
-  --font-family: 'Roboto', sans-serif;
+  --font-family: 'Comic Sans MS', cursive;
 }
 
 /* Container */
@@ -27,6 +27,22 @@ body {
   background-color: var(--body-color);
   margin: auto;
   border: none;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+nav {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+
+  background-color: var(--body-color);
+  color: var(--text-color);
+  font-family: var(--font-family);
+  
+  margin: 0.5rem;
 }
 
 
@@ -38,8 +54,24 @@ form {
   font-family: var(--font-family);
   padding: 1.5rem;
   border-radius: 12px;
-  max-width: 500px;
-  margin: auto;
+  max-width: 430px;
+  margin: 0.5rem;
+}
+
+.section-box .counter-field {
+  width: 50%;
+  box-sizing: border-box;
+  padding: 8px;
+}
+
+.section-box select {
+  margin-right: 0.5rem;
+}
+
+.section-box .selections-field {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 8px;
 }
 
 .section-box {
@@ -48,36 +80,29 @@ form {
   border-radius: 12px;
   margin-bottom: 2rem;
   max-width: 100%;
+  display: flex;
+  flex-wrap: wrap;
 }
 
-.section-box select {
-  margin-right: 0.5rem;
-}
-
-input[type="number"]::-webkit-inner-spin-button,
-input[type="number"]::-webkit-outer-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
-.section-box input {
-  background-color: var(--background-color);
-  color: var(--text-color);
-  font-family: var(--font-family);
-
+.selection-option {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
   width: 100%;
-  padding-top: 0.5em;
-  padding-bottom: 0.5em;
-  border-radius: 8px;
-  border: none;
-  margin-right: 0.5rem;
-  border: 1px solid var(--text-field-border-color);
+}
+
+.selection-option button {
+  box-sizing: border-box; 
+  white-space: normal;     
+  width: 100%;
+  padding: 0.5rem 1rem;
 }
 
 button {
   background-color: var(--button-color);
   color: var(--buttin-text-color);
   font-family: var(--font-family);
+
   padding: 0.5rem 1rem;
   border-radius: 8px;
   border: none;
@@ -96,3 +121,70 @@ button.selected {
   color: var(--buttin-text-color);
 }
 
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.section-box input {
+  background-color: var(--background-color);
+  color: var(--text-color);
+  font-family: var(--font-family);
+
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  border-radius: 8px;
+  border: none;
+  margin-right: 0.5rem;
+  border: 1px solid var(--text-field-border-color);
+}
+
+.section-box input[type="number"] {
+  width: 50%;
+}
+
+
+.section-box input[type="text"] {
+  width: 100%;
+}
+
+
+.sort-type-select select{
+  background-color: var(--background-color);
+  color: var(--text-color);
+  font-family: var(--font-family);
+  padding: 0.5rem;
+  border-radius: 8px;
+  border: none;
+  margin-right: 0.5rem;
+  border: 1px solid var(--text-field-border-color);
+}
+
+.scouting-page {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin-bottom: 1rem;
+  font-family: var(--font-family);
+}
+
+th, td {
+  text-align: left;
+  padding: 8px;
+  border-bottom: 1px solid var(--text-field-border-color);
+  color: var(--text-color)
+}
+
+.error {
+  color: red;
+  font-size: 0.8rem;
+  margin-top: 0.5rem;
+  font-family:var(--font-family)
+}

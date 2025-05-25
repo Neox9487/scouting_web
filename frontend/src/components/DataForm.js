@@ -30,15 +30,15 @@ const INITIAL_FORM = {
 };
 
 const BARGE_OPTIONS = [
-  { label: "No barge",     value: "none" },
+  { label: "No",     value: "none" },
   { label: "Park",         value: "park" },
   { label: "Shallow Cage", value: "shallow_cage" },
   { label: "Deep Cage",    value: "deep_cage" },
 ];
 
 const LEAVE_OPTIONS = [
-  { label: "No",  value: false }, 
-  { label: "Yes", value: true }, 
+  { label: "Yes",  value: true }, 
+  { label: "No", value: false }, 
 ];
 
 const DataForm = ({ onSubmit, initialData}) => {
@@ -166,7 +166,6 @@ const DataForm = ({ onSubmit, initialData}) => {
         <div className="selections-field">
           <Selections
             label={"Leave"}
-            className="leave"
             options={LEAVE_OPTIONS} 
             value={formData.auto.leave}
             onChange={(selectedValue) => handleInputChange("auto", "leave", selectedValue.value === true || selectedValue.value === "true" ? true : false)}
@@ -258,7 +257,7 @@ const DataForm = ({ onSubmit, initialData}) => {
       <div className="section-box">
         <div className="selections-field">
           <Selections
-            className="barge"
+            label={"Barge"}
             value={formData.teleop.barge}
             onChange={(selectedOption) => handleInputChange("teleop", "barge", selectedOption.value)}
             options={BARGE_OPTIONS} 
@@ -277,7 +276,7 @@ const DataForm = ({ onSubmit, initialData}) => {
 
       {/* Submit Button */}
       <button type="submit" className="submit-button">
-        上傳
+        Submit
       </button>
     </form>
   );

@@ -7,9 +7,9 @@ function App() {
 
   return (
     <div className="App">
-      <nav style={{ marginBottom: "20px" }}>
-        <button onClick={() => setPage("scouting")}>Scouting Page</button>
-        <button onClick={() => setPage("manage")}>Manage Page</button>
+      <nav>
+        <button onClick={() => setPage("scouting")}>Scouting</button>
+        <button onClick={() => setPage("manage")}>Matches</button>
       </nav>
 
       {page === "scouting" && <ScoutingPage />}
