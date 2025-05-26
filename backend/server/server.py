@@ -2,6 +2,7 @@ import fastapi
 
 from modules import MatchData, TeamMatch, to_dict_list
 from db_operation import Matches
+import os
 
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -16,7 +17,7 @@ class Server:
       allow_headers=["*"]
     )
     self.host = host
-    self.port = port
+    self.port = int(os.environ.get("PORT", 8000))
     self.matches = Matches()
 
     @self.app.get("/")
