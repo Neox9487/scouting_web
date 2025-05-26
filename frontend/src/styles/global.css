@@ -42,7 +42,7 @@ nav {
   color: var(--text-color);
   font-family: var(--font-family);
   
-  margin: 0.5rem;
+  margin: 1.5rem;
 }
 
 
@@ -163,6 +163,7 @@ input[type="number"]::-webkit-outer-spin-button {
 
 .scouting-page {
   display: flex;
+  flex-direction: column;
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
@@ -187,4 +188,23 @@ th, td {
   font-size: 0.8rem;
   margin-top: 0.5rem;
   font-family:var(--font-family)
+}
+
+.edit-form {
+  font-family: var(--font-family);
+  background-color: var(--background-color);
+  color: var(--text-color);
+  padding: 1.5rem;
+  border-radius: 12px;
+  max-width: 430px;
+}
+
+.message {
+  background-color: var(--main-color);
+  color: white;
+  font-size: 1.2rem;
+  padding: 0.5rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  font-family: var(--font-family);
 }

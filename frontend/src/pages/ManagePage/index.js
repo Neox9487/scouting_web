@@ -73,8 +73,8 @@ function ManagePage() {
       } else if (type === "match") {
         return a.match - b.match;
       } else if (type === "auto") {
-        return (a.auto.leave*4 +a.auto.coral_l1*3 + a.auto.coral_l2*4 + a.auto.coral_l3*6 + a.auto.coral_l4*6 + a.auto.processor*6 + a.auto.net*4) - 
-               (b.auto.leave*4 +b.auto.coral_l1*3 + b.auto.coral_l2*4 + b.auto.coral_l3*6 + b.auto.coral_l4*6 + b.auto.processor*6 + b.auto.net*4);
+        return (b.auto.leave*4 +b.auto.coral_l1*3 + b.auto.coral_l2*4 + b.auto.coral_l3*6 + b.auto.coral_l4*6 + b.auto.processor*6 + b.auto.net*4) - 
+               (a.auto.leave*4 +a.auto.coral_l1*3 + a.auto.coral_l2*4 + a.auto.coral_l3*6 + a.auto.coral_l4*6 + a.auto.processor*6 + a.auto.net*4);
       } else if (type === "teleop") {
         // teleop score
         let a_score = a.teleop.coral_l1*3 + a.teleop.coral_l2*4 + a.teleop.coral_l3*6 + a.teleop.coral_l4*6 + a.teleop.processor*6 + a.teleop.net*4;
@@ -103,17 +103,17 @@ function ManagePage() {
         }
         return a_score - b_score;
       } else if (type === "processor") {
-        return (a.auto.processor + a.teleop.processor) - (b.auto.processor + b.teleop.processor);
+        return (b.auto.processor + b.teleop.processor) - (a.auto.processor + a.teleop.processor);
       } else if (type === "net") {
-        return (a.auto.net + a.teleop.net) - (b.auto.net + b.teleop.net);
+        return (b.auto.net + b.teleop.net) - (a.auto.net + a.teleop.net);
       } else if (type === "L4") {
-        return (a.auto.coral_l4 + a.teleop.coral_l4) - (b.auto.coral_l4 + b.teleop.coral_l4);
+        return (b.auto.coral_l4 + b.teleop.coral_l4) - (a.auto.coral_l4 + a.teleop.coral_l4);
       } else if (type === "L3") {
-        return (a.auto.coral_l3 + a.teleop.coral_l3) - (b.auto.coral_l3 + b.teleop.coral_l3);
+        return (b.auto.coral_l3 + b.teleop.coral_l3) - (a.auto.coral_l3 + a.teleop.coral_l3);
       } else if (type === "L2") {
-        return (a.auto.coral_l2 + a.teleop.coral_l2) - (b.auto.coral_l2 + b.teleop.coral_l2);
+        return (b.auto.coral_l2 + b.teleop.coral_l2) - (a.auto.coral_l2 + a.teleop.coral_l2);
       } else if (type === "L1") {
-        return (a.auto.coral_l1 + a.teleop.coral_l1) - (b.auto.coral_l1 + b.teleop.coral_l1);
+        return (b.auto.coral_l1 + b.teleop.coral_l1) - (a.auto.coral_l1 + a.teleop.coral_l1);
       } else {
         return a.match - b.match;
       }
@@ -183,16 +183,25 @@ function ManagePage() {
         {/* Sort buttons */}
         <div className="section-box">
           <button onClick={refresh}>Refresh</button>
-          <div className="sort-type-select">
-            <select>
-              {SortOptions.map((option) => (
-                <option key={option.value} value={option.value} selected={option.value === sortType} onClick={() => {setSortType(option.value) && sortData(option.value)}}>{option.label}</option>
-              ))}
-            </select>
-          </div>
         </div>    
         {/* Data table */}
         <div className="section-box">
+          <div className="sort-type-select">
+            <select
+              value={sortType}
+              onChange={(e) => {
+                const selected = e.target.value;
+                setSortType(selected);
+                sortData(selected);
+              }}
+            >
+              {SortOptions.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
+          </div>
           <table className="data-table">
             <thead>
               <tr>
@@ -237,7 +246,7 @@ function ManagePage() {
       {/* edit form*/}
       {editing && (
         <div className="edit-form">
-          <h2>Edit Data</h2>
+          <h3>Edit Data</h3>
           <DataForm
             initialData={editing}
             onSubmit={(updatedData) => {
