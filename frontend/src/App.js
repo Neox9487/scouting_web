@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import ScoutingPage from "./pages/ScoutingPage/index";
+import ScoutingPage from "./pages/scoutingPage/index";
 import ManagePage from "./pages/ManagePage/index";  // 假設你有這個頁面
 
 function App() {
