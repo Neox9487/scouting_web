@@ -1,1 +1,2 @@
-from .config import *
+# from .config import *
+from .env_config import *
