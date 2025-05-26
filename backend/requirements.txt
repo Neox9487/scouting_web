@@ -2,3 +2,4 @@ fastapi
 opencv-python
 uvicorn
 psycopg2
+dotenv
