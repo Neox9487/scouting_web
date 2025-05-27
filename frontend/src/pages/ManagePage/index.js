@@ -65,6 +65,10 @@ function ManagePage() {
         setIsError(true);
       });
   }, []);
+  
+  const getAutoScore = (auto) => {
+    return auto.leave*4 +auto.coral_l1*3 + auto.coral_l2*4 + auto.coral_l3*6 + auto.coral_l4*6 + auto.processor*6 + auto.net*4;
+  };
 
   const sortData = (type) => {
     const sortedData = [...data].sort((a, b) => {

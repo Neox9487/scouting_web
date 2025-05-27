@@ -48,7 +48,6 @@ class Matches:
         teleop_coral_l1, teleop_coral_l2, teleop_coral_l3, teleop_coral_l4, teleop_processor, teleop_net,
         teleop_barge, note
       ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
-      ON CONFLICT (match, team_number) DO NOTHING
     """).format(table=sql.Identifier(TABLE_NAME))
 
     values = (
