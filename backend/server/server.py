@@ -51,7 +51,11 @@ class Server:
 
     @self.app.put("/update/")
     def update(data: MatchData):
-      pass
+      try:
+        self.matches.update_match(data.model_dump())
+        return {"error": False, "message": "Data updated!"}
+      except Exception as e:
+        return {"error": True, "message": str(e)}
     
   def run(self):
     import uvicorn
