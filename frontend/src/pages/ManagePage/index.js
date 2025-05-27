@@ -155,7 +155,7 @@ function ManagePage() {
         setIsError(false);
       })
       .catch((error) => {
-        setMessage("Error updating data");
+        setMessage("Error updating data: "+ error);
         setIsError(true);
       });
   };
