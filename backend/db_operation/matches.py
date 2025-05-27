@@ -38,6 +38,7 @@ class Matches:
     """).format(table=sql.Identifier(TABLE_NAME))
 
     self.cursor.execute(create_table_query)
+    self.cursor.execute("ROLLBACK")
     self.db.commit()
 
   def add_match(self, data):
@@ -70,6 +71,7 @@ class Matches:
       data["note"]
     )
     self.cursor.execute(insert_query, values)
+    self.cursor.execute("ROLLBACK")
     self.db.commit()
 
   def delete_match(self, match, team_number):
@@ -77,6 +79,7 @@ class Matches:
       DELETE FROM {table} WHERE match = %s AND team_number = %s
     """).format(table=sql.Identifier(TABLE_NAME))
     self.cursor.execute(delete_query, (match, team_number))
+    self.cursor.execute("ROLLBACK")
     self.db.commit()
 
   def update_match(self, data):
@@ -120,6 +123,7 @@ class Matches:
       data["match"]
     )
     self.cursor.execute(update_query, values)
+    self.cursor.execute("ROLLBACK")
     self.db.commit()
 
   def get_all_matches(self):
