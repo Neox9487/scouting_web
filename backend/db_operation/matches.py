@@ -12,7 +12,6 @@ class Matches:
       dbname=DATABASE_NAME
     )
     self.cursor = self.db.cursor()
-    # 建立資料表（資料庫要先在 Render 建好）
     create_table_query = sql.SQL("""
       CREATE TABLE IF NOT EXISTS {table} (
         id SERIAL PRIMARY KEY,
@@ -36,10 +35,12 @@ class Matches:
         UNIQUE(match, team_number)
       )
     """).format(table=sql.Identifier(TABLE_NAME))
-
-    self.cursor.execute(create_table_query)
-    self.cursor.execute("ROLLBACK")
-    self.db.commit()
+    try:
+      self.cursor.execute(create_table_query)
+      self.db.commit()
+    except Exception as e:
+      self.db.rollback()
+      raise e
 
   def add_match(self, data):
     insert_query = sql.SQL("""
@@ -70,16 +71,18 @@ class Matches:
       data["teleop"]["barge"],
       data["note"]
     )
-    self.cursor.execute(insert_query, values)
-    self.cursor.execute("ROLLBACK")
-    self.db.commit()
+    try:
+      self.cursor.execute(insert_query, values)
+      self.db.commit()
+    except Exception as e:
+      self.db.rollback()
+      raise e
 
   def delete_match(self, match, team_number):
     delete_query = sql.SQL("""
       DELETE FROM {table} WHERE match = %s AND team_number = %s
     """).format(table=sql.Identifier(TABLE_NAME))
     self.cursor.execute(delete_query, (match, team_number))
-    self.cursor.execute("ROLLBACK")
     self.db.commit()
 
   def update_match(self, data):
@@ -122,11 +125,18 @@ class Matches:
       data["team_number"],
       data["match"]
     )
-    self.cursor.execute(update_query, values)
-    self.cursor.execute("ROLLBACK")
-    self.db.commit()
+    try:
+      self.cursor.execute(update_query, values)
+      self.db.commit()
+    except Exception as e:
+      self.db.rollback()
+      raise e
 
   def get_all_matches(self):
     select_query = sql.SQL("SELECT * FROM {table}").format(table=sql.Identifier(TABLE_NAME))
-    self.cursor.execute(select_query)
+    try:
+      self.cursor.execute(select_query)
+    except Exception as e:
+      self.db.rollback()
+      raise e
     return self.cursor.fetchall()
