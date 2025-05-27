@@ -65,10 +65,6 @@ function ManagePage() {
         setIsError(true);
       });
   }, []);
-  
-  const getAutoScore = (auto) => {
-    return auto.leave*4 +auto.coral_l1*3 + auto.coral_l2*4 + auto.coral_l3*6 + auto.coral_l4*6 + auto.processor*6 + auto.net*4;
-  };
 
   const sortData = (type) => {
     const sortedData = [...data].sort((a, b) => {
@@ -180,8 +176,6 @@ function ManagePage() {
 
   return (
     <div className="manage-page">
-      {isLoading && <p>Loading...</p>}
-      {isError && <p className="error">{message}</p>}
       <div className={`data-table-${isLoading ? "loading" : ""}`}>
         {/* Sort buttons */}
         <div className="section-box">
@@ -260,6 +254,8 @@ function ManagePage() {
           <button onClick={() => setEditing(null)}>Cancel</button>
         </div>
       )}
+      {isError && <p className="error">{message}</p>}
+      {isLoading && <p className="loading">Loading...</p>}
     </div>
   )
 }

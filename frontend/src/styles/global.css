@@ -183,13 +183,6 @@ th, td {
   color: var(--text-color)
 }
 
-.error {
-  color: red;
-  font-size: 0.8rem;
-  margin-top: 0.5rem;
-  font-family:var(--font-family)
-}
-
 .edit-form {
   font-family: var(--font-family);
   background-color: var(--background-color);
@@ -207,4 +200,32 @@ th, td {
   border-radius: 8px;
   margin-bottom: 1rem;
   font-family: var(--font-family);
+}
+
+.error {
+  color: rgb(255, 69, 69);
+  background-color: rgb(127, 7, 31);
+  font-family: var(--font-family);
+
+  font-size: 0.8rem;
+  margin-bottom: 0.5rem;
+  padding: 0.5rem;
+  border-radius: 8px;
+
+  word-break: break-word;
+  white-space: normal;
+  width: 400px;
+}
+
+.loading {
+  color: greenyellow;
+  background-color: green;
+  font-family: var(--font-family);
+  
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+  padding: 0.5rem;
+
+  border-radius: 8px;
+  max-width: 100px;
 }
