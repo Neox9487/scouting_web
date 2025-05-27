@@ -150,7 +150,7 @@ function ManagePage() {
   const handleUpdate = (updatedData) => {
     updateData(updatedData)
       .then(() => {
-        setData(data.map((item) => (item.id === updatedData.id ? updatedData : item)));
+        refresh();
         setMessage("Data updated successfully");
         setIsError(false);
       })
@@ -173,7 +173,6 @@ function ManagePage() {
         setIsError(true);
     });
   };
-  
 
   return (
     <div className="manage-page">
