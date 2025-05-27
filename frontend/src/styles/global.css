@@ -19,7 +19,7 @@
   --button-on-hover-color: #21196d;
   --buttin-text-color: #6182c0;
 
-  --font-family: 'Comic Sans MS', cursive;
+  --font-family: 'Arial', cursive;
 }
 
 /* Container */
@@ -47,7 +47,6 @@ nav {
 
 
 /* Data form*/
-
 form {
   background-color: var(--background-color);
   color: var(--text-color);
@@ -58,6 +57,7 @@ form {
   margin: 0.5rem;
 }
 
+/* section-box */
 .section-box .counter-field {
   width: 50%;
   box-sizing: border-box;
@@ -74,6 +74,27 @@ form {
   padding: 8px;
 }
 
+.section-box input {
+  background-color: var(--background-color);
+  color: var(--text-color);
+  font-family: var(--font-family);
+
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  border-radius: 8px;
+  border: none;
+  margin-right: 0.5rem;
+  border: 1px solid var(--text-field-border-color);
+}
+
+.section-box input[type="number"] {
+  width: 50%;
+}
+
+.section-box input[type="text"] {
+  width: 100%;
+}
+
 .section-box {
   background-color: var(--base-color);
   padding: 1.5rem;
@@ -84,6 +105,7 @@ form {
   flex-wrap: wrap;
 }
 
+/* sections' option*/
 .selection-option {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -98,6 +120,7 @@ form {
   padding: 0.5rem 1rem;
 }
 
+/* button */
 button {
   background-color: var(--button-color);
   color: var(--buttin-text-color);
@@ -121,35 +144,15 @@ button.selected {
   color: var(--buttin-text-color);
 }
 
+
+/* input */
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
 
-.section-box input {
-  background-color: var(--background-color);
-  color: var(--text-color);
-  font-family: var(--font-family);
-
-  padding-top: 0.5em;
-  padding-bottom: 0.5em;
-  border-radius: 8px;
-  border: none;
-  margin-right: 0.5rem;
-  border: 1px solid var(--text-field-border-color);
-}
-
-.section-box input[type="number"] {
-  width: 50%;
-}
-
-
-.section-box input[type="text"] {
-  width: 100%;
-}
-
-
+/* sort type selection */
 .sort-type-select select{
   background-color: var(--background-color);
   color: var(--text-color);
@@ -161,7 +164,8 @@ input[type="number"]::-webkit-outer-spin-button {
   border: 1px solid var(--text-field-border-color);
 }
 
-.scouting-page {
+/* page */
+.scouting-page, .manage-page {
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
@@ -169,6 +173,7 @@ input[type="number"]::-webkit-outer-spin-button {
   align-items: center;
 }
 
+/* table */
 table {
   border-collapse: collapse;
   width: 100%;
@@ -183,6 +188,7 @@ th, td {
   color: var(--text-color)
 }
 
+/* edit form */
 .edit-form {
   font-family: var(--font-family);
   background-color: var(--background-color);
@@ -192,6 +198,7 @@ th, td {
   max-width: 430px;
 }
 
+/* my <p> */
 .message {
   background-color: var(--main-color);
   color: white;
@@ -211,6 +218,7 @@ th, td {
   margin-bottom: 0.5rem;
   padding: 0.5rem;
   border-radius: 8px;
+  text-align: center;
 
   word-break: break-word;
   white-space: normal;

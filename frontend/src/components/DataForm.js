@@ -37,8 +37,8 @@ const BARGE_OPTIONS = [
 ];
 
 const LEAVE_OPTIONS = [
-  { label: "Yes",  value: true }, 
-  { label: "No", value: false }, 
+  { label: "No",  value: false }, 
+  { label: "Yes", value: true }, 
 ];
 
 const DataForm = ({ onSubmit, initialData}) => {
