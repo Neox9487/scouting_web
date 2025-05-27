@@ -53,7 +53,7 @@ function ManagePage() {
     fetchData()
       .then((data) => {
         const sortedData = [...data.data].sort((a, b) => {
-          return a.team_number - b.team_number;
+          return a.match - b.match;
         })
         setData(sortedData);
         setIsLoading(false);
@@ -77,8 +77,8 @@ function ManagePage() {
                (a.auto.leave*4 +a.auto.coral_l1*3 + a.auto.coral_l2*4 + a.auto.coral_l3*6 + a.auto.coral_l4*6 + a.auto.processor*6 + a.auto.net*4);
       } else if (type === "teleop") {
         // teleop score
-        let a_score = a.teleop.coral_l1*3 + a.teleop.coral_l2*4 + a.teleop.coral_l3*6 + a.teleop.coral_l4*6 + a.teleop.processor*6 + a.teleop.net*4;
-        let b_score = b.teleop.coral_l1*3 + b.teleop.coral_l2*4 + b.teleop.coral_l3*6 + b.teleop.coral_l4*6 + b.teleop.processor*6 + b.teleop.net*4;
+        let a_score = b.teleop.coral_l1*3 + b.teleop.coral_l2*4 + b.teleop.coral_l3*6 + b.teleop.coral_l4*6 + b.teleop.processor*6 + b.teleop.net*4;
+        let b_score = a.teleop.coral_l1*3 + a.teleop.coral_l2*4 + a.teleop.coral_l3*6 + a.teleop.coral_l4*6 + a.teleop.processor*6 + a.teleop.net*4;
 
         if (a.teleop.barge === "none") {
           a_score += 0;
@@ -134,7 +134,7 @@ function ManagePage() {
     fetchData()
       .then((data) => {
         const sortedData = [...data.data].sort((a, b) => {
-          return a.team_number - b.team_number;
+          return a.match - b.match;
         })
         setData(sortedData);
         setIsLoading(false);
@@ -216,7 +216,7 @@ function ManagePage() {
                 <th>L2</th>
                 <th>L1</th>
                 <th>Barge</th>
-                <th>Actions</th>
+                <th></th>
               </tr>
             </thead>
             <tbody>
