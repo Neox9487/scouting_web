@@ -17,7 +17,7 @@ class Server:
       allow_headers=["*"]
     )
     self.host = host
-    self.port = int(os.environ.get("PORT", 8000))
+    self.port = port
     self.matches = Matches()
 
     @self.app.get("/")
