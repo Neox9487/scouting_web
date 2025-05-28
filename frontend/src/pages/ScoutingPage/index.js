@@ -37,7 +37,7 @@ function ScoutingPage() {
           {message}
         </p>
       )}
-      {isLoading && <h2>提交中...</h2>}
+      {isLoading && <p className="message">Submitting...</p>}
     </div>
   );
 }

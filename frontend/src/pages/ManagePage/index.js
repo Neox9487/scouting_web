@@ -167,6 +167,7 @@ function ManagePage() {
         setData(data.filter((item) => item.team_number !== teamNumber || item.match !== match));
         setMessage("Data deleted successfully");
         setIsError(false);
+        setEditing(null)
       })
       .catch((error) => {
         setMessage("Error deleting data: "+error);
@@ -217,7 +218,7 @@ function ManagePage() {
               </tr>
             </thead>
             <tbody>
-              {data.map((item) => (
+              {data && data.map((item) => (
                 <tr key={`${item.team_number}-${item.match}`}>
                   <td>{item.team_number}</td>
                   <td>{item.match}</td>
@@ -256,6 +257,7 @@ function ManagePage() {
       )}
       {isError && <p className="error">{message}</p>}
       {isLoading && <p className="loading">Loading...</p>}
+      {!isError && !isLoading && data.length === 0 && <p className="error">No data found! You can go to scouting page to add data.</p>}
     </div>
   )
 }
