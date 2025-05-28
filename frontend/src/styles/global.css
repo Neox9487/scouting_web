@@ -33,6 +33,10 @@ body {
   align-items: center;
 }
 
+h2, h3 {
+  caret-color: transparent;
+}
+
 nav {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -122,6 +126,7 @@ form {
 
 /* button */
 button {
+  caret-color: transparent;
   background-color: var(--button-color);
   color: var(--buttin-text-color);
   font-family: var(--font-family);
@@ -175,6 +180,7 @@ input[type="number"]::-webkit-outer-spin-button {
 
 /* table */
 table {
+  caret-color: transparent;
   border-collapse: collapse;
   width: 100%;
   margin-bottom: 1rem;
@@ -182,6 +188,7 @@ table {
 }
 
 th, td {
+  caret-color: transparent;
   text-align: left;
   padding: 8px;
   border-bottom: 1px solid var(--text-field-border-color);
@@ -200,6 +207,7 @@ th, td {
 
 /* my <p> */
 .message {
+  caret-color: transparent;
   background-color: var(--main-color);
   color: white;
   font-size: 1.2rem;
@@ -210,6 +218,7 @@ th, td {
 }
 
 .error {
+  caret-color: transparent;
   color: rgb(255, 69, 69);
   background-color: rgb(127, 7, 31);
   font-family: var(--font-family);
@@ -226,6 +235,7 @@ th, td {
 }
 
 .loading {
+  caret-color: transparent;
   color: greenyellow;
   background-color: green;
   font-family: var(--font-family);
